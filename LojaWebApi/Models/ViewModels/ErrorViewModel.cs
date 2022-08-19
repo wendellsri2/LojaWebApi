@@ -1,4 +1,5 @@
-namespace LojaWebApi.Models
+
+namespace LojaWebApi.Models.ViewModels
 {
     public class ErrorViewModel
     {

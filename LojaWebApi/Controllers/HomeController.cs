@@ -1,4 +1,5 @@
 ﻿using LojaWebApi.Models;
+using LojaWebApi.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
