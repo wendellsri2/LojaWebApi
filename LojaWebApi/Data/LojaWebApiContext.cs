@@ -14,6 +14,9 @@ namespace LojaWebApi.Data
         {
         }
 
-        public DbSet<LojaWebApi.Models.Department> Department { get; set; } = default!;
+        public DbSet<Departamento> Departamento { get; set; } = default!;
+        public DbSet<Vendedor> Vendedor { get; set; } = default!;
+        public DbSet<RegistroVenda> RegistroVenda { get; set; } = default!;        
+
     }
 }
