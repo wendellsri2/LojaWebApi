@@ -1,0 +1,54 @@
+﻿@model IEnumerable<LojaWebApi.Models.Vendedor>
+
+@{
+    ViewData["Title"] = "Vendedor";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr class="success">
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DtNascimento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BaseSalarial)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DtNascimento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BaseSalarial)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.VendedorId">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.VendedorId">Detalhes</a>
+                    <a asp-action="Delete" asp-route-id="@item.VendedorId">Deletar</a>
+                </td>
+            </tr>
+        }
+       
+    </tbody>
+
+
+</table>
