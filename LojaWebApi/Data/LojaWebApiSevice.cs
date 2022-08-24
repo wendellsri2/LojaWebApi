@@ -1,6 +1,5 @@
 ﻿using LojaWebApi.Models;
 using LojaWebApi.Models.Enum;
-using NuGet.Protocol.Plugins;
 
 namespace LojaWebApi.Data
 {
