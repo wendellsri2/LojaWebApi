@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using LojaWebApi.Services;
 
 namespace LojaWebApi
 {
@@ -38,6 +39,7 @@ namespace LojaWebApi
             _ = services.AddMvc(opção => opção.EnableEndpointRouting = false);
 
             _ = services.AddScoped<LojaWebApiSevice>();
+            _ = services.AddScoped<VendedorService>();
 
         }
 
