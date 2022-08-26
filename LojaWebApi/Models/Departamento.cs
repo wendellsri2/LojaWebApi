@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace LojaWebApi.Models
 {
+    [Table("Departamento")]
     public class Departamento
     {
         public int DepartamentoId { get; set; }
