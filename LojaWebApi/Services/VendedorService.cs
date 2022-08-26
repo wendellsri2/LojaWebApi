@@ -1,5 +1,6 @@
 ﻿using LojaWebApi.Data;
 using LojaWebApi.Models;
+using LojaWebApi.Services.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace LojaWebApi.Services
@@ -32,6 +33,23 @@ namespace LojaWebApi.Services
             var obj = _context.Vendedor.Find(id);
             _ = _context.Vendedor.Remove(obj);
             _ = _context.SaveChanges();
+        }
+
+        public void Atualizar(Vendedor obj)
+        {
+            if (!_context.Vendedor.Any(x => x.VendedorId == obj.VendedorId))
+            {
+                throw new NotFoundException("Vendedor não encontrado");
+            }
+            try 
+            { 
+            _context.Update(obj);
+            _context.SaveChanges();
+            }
+            catch (DbConcurrencyException e)
+            {
+                throw new DbConcurrencyException(e.Message);
+            }
         }
     }
 }
