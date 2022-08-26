@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace LojaWebApi.Models
 {
+    [Table("Vendedor")]
     public class Vendedor
     {
         public int VendedorId { get; set; }
