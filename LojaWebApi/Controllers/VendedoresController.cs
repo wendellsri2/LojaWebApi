@@ -34,6 +34,13 @@ namespace LojaWebApi.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Vendedor vendedor)
         {
+            if (!ModelState.IsValid)
+            {
+                var departamentos = _departamentoService.ListarAll();
+                var viewModel = new VendedorFormViewModel { Vendedor = vendedor, Departamentos = departamentos };
+                return View(vendedor);
+            }
+
             _vendedorService.Inserir(vendedor);
             return RedirectToAction(nameof(Index));
         }
@@ -94,6 +101,12 @@ namespace LojaWebApi.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Vendedor vendedor)
         {
+            if (!ModelState.IsValid)
+            {
+                var departamentos = _departamentoService.ListarAll();
+                var viewModel = new VendedorFormViewModel { Vendedor = vendedor, Departamentos = departamentos };
+                return View(vendedor);
+            }
             if (id != vendedor.VendedorId)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id não corresponde" });
