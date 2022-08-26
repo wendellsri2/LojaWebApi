@@ -3,6 +3,7 @@ using LojaWebApi.Models.ViewModels;
 using LojaWebApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
+using System.Diagnostics;
 
 namespace LojaWebApi.Controllers
 {
@@ -40,12 +41,12 @@ namespace LojaWebApi.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new {message = "Id não foi fornecido"});
             }
             var obj = _vendedorService.Procurar(id.Value);
             if (obj == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não encontrado" });
             }
             return View(obj);
         }
@@ -61,12 +62,12 @@ namespace LojaWebApi.Controllers
         {
             if(id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não fornecido" });
             }
             var obj = _vendedorService.Procurar(id.Value);
             if (obj == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não encontrado" });
             }
             return View(obj);
 
@@ -76,12 +77,12 @@ namespace LojaWebApi.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não fornecido" });
             }
             var obj = _vendedorService.Procurar(id.Value);
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não encontrado" });
             }
             List<Departamento> departamentos = _departamentoService.ListarAll();
             VendedorFormViewModel viewModel = new VendedorFormViewModel
@@ -95,21 +96,27 @@ namespace LojaWebApi.Controllers
         {
             if (id != vendedor.VendedorId)
             {
-                return BadRequest();
+                return RedirectToAction(nameof(Error), new { message = "Id não corresponde" });
             }
             try
             { 
             _vendedorService.Atualizar(vendedor);
             return RedirectToAction(nameof(Index));
             }
-            catch (NotImplementedException)
+            catch (ApplicationException e)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = e.Message });
             }
-            catch (DBConcurrencyException)
+
+        }
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel
             {
-                return BadRequest();
-            }
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
         }
     }
 }
