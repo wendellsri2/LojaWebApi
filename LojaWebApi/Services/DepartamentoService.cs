@@ -1,5 +1,6 @@
 ﻿using LojaWebApi.Data;
 using LojaWebApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace LojaWebApi.Services
 {
@@ -12,9 +13,9 @@ namespace LojaWebApi.Services
             _context = context;
         }
 
-        public List<Departamento> ListarAll()
+        public async Task<List<Departamento>> ListarAllAsync()
         {
-            return _context.Departamento.OrderBy(x => x.Nome).ToList();
+            return await _context.Departamento.OrderBy(x => x.Nome).ToListAsync();
         }
     }
 }

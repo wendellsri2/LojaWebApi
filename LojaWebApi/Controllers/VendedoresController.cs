@@ -18,39 +18,39 @@ namespace LojaWebApi.Controllers
             _departamentoService = departamentoService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var list = _vendedorService.Listar();
+            var list = await _vendedorService.ListarAsync();
             return View(list);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var departamentos = _departamentoService.ListarAll();
+            var departamentos = await _departamentoService.ListarAllAsync();
             var viewModel = new VendedorFormViewModel { Departamentos = departamentos };
             return View(viewModel);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Vendedor vendedor)
+        public async Task<IActionResult> Create(Vendedor vendedor)
         {
             if (!ModelState.IsValid)
             {
-                var departamentos = _departamentoService.ListarAll();
+                var departamentos = await _departamentoService.ListarAllAsync();
                 var viewModel = new VendedorFormViewModel { Vendedor = vendedor, Departamentos = departamentos };
                 return View(vendedor);
             }
 
-            _vendedorService.Inserir(vendedor);
+            await _vendedorService.InserirAsync(vendedor);
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new {message = "Id não foi fornecido"});
             }
-            var obj = _vendedorService.Procurar(id.Value);
+            var obj = await _vendedorService.ProcurarAsync(id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id não encontrado" });
@@ -59,19 +59,19 @@ namespace LojaWebApi.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _vendedorService.Remover(id);
+            await _vendedorService.RemoverAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if(id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id não fornecido" });
             }
-            var obj = _vendedorService.Procurar(id.Value);
+            var obj = await _vendedorService.ProcurarAsync(id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id não encontrado" });
@@ -80,18 +80,18 @@ namespace LojaWebApi.Controllers
 
         }
 
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id não fornecido" });
             }
-            var obj = _vendedorService.Procurar(id.Value);
+            var obj = await _vendedorService.ProcurarAsync(id.Value);
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id não encontrado" });
             }
-            List<Departamento> departamentos = _departamentoService.ListarAll();
+            List<Departamento> departamentos = await _departamentoService.ListarAllAsync();
             VendedorFormViewModel viewModel = new VendedorFormViewModel
             { Vendedor = obj, Departamentos = departamentos };
             return View(viewModel);
@@ -99,11 +99,11 @@ namespace LojaWebApi.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Vendedor vendedor)
+        public async Task<IActionResult> Edit(int id, Vendedor vendedor)
         {
             if (!ModelState.IsValid)
             {
-                var departamentos = _departamentoService.ListarAll();
+                var departamentos = await _departamentoService.ListarAllAsync();
                 var viewModel = new VendedorFormViewModel { Vendedor = vendedor, Departamentos = departamentos };
                 return View(vendedor);
             }
@@ -113,7 +113,7 @@ namespace LojaWebApi.Controllers
             }
             try
             { 
-            _vendedorService.Atualizar(vendedor);
+            await _vendedorService.AtualizarAsync(vendedor);
             return RedirectToAction(nameof(Index));
             }
             catch (ApplicationException e)
