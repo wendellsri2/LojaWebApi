@@ -7,6 +7,11 @@ namespace LojaWebApi.Models
     [Table("Vendedor")]
     public class Vendedor
     {
+        public Vendedor()
+        {
+
+        }
+        
         public int VendedorId { get; set; }
 
         [Required(ErrorMessage ="{0} obrigatório!")]
@@ -34,9 +39,7 @@ namespace LojaWebApi.Models
         public int DepartamentoId { get; set; }
         public ICollection<RegistroVenda>? Vendas { get; set; } = new List<RegistroVenda>();
 
-        public Vendedor()
-        {
-        }
+      
 
         public Vendedor(int vendedorId, string? nome, string? email, DateTime dtNascimento, double baseSalarial, Departamento? departamento)
         {
