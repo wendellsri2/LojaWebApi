@@ -3,10 +3,16 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LojaWebApi.Models
-{
+{  
+
     [Table("RegistroVenda")]
     public class RegistroVenda
     {
+        public RegistroVenda()
+        {
+
+        }
+
         public int Id { get; set; }        
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
@@ -15,12 +21,8 @@ namespace LojaWebApi.Models
 
         public double Total { get; set; }
         public StatusVenda Status { get; set; }
-        public Vendedor? Vendedor { get; set; }        
-
-        public RegistroVenda()
-        {
-        }
-
+        public Vendedor? Vendedor { get; set; }
+        
         public RegistroVenda(int vendaId, DateTime dataVenda, double total, StatusVenda status, Vendedor? vendedor)
         {
             

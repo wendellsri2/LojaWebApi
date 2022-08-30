@@ -41,6 +41,7 @@ namespace LojaWebApi
             _ = services.AddScoped<LojaWebApiSevice>();
             _ = services.AddScoped<VendedorService>();
             _ = services.AddScoped<DepartamentoService>();
+            _ = services.AddScoped<RegistroVendaService>();
 
         }
 
