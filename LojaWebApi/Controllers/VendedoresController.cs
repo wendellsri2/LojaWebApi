@@ -1,6 +1,7 @@
 ﻿using LojaWebApi.Models;
 using LojaWebApi.Models.ViewModels;
 using LojaWebApi.Services;
+using LojaWebApi.Services.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Diagnostics;
@@ -61,8 +62,15 @@ namespace LojaWebApi.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            await _vendedorService.RemoverAsync(id);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _vendedorService.RemoverAsync(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (IntegrityException e)
+            {
+                return RedirectToAction(nameof(Error), new { message = e.Message });
+            }
         }
 
         public async Task<IActionResult> Details(int? id)
